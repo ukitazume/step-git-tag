@@ -18,8 +18,8 @@ if [ "$WERCKER_RESULT" = "passed" ]; then
     debug 'fetched git tags'
 
     # Create the name of the tag
-    tagname="deploy-$WERCKER_DEPLOYTARGET_NAME"
-    
+    tagname="deploy-$WERCKER_GIT_COMMIT"
+
     # Delete the tag if it exists, otherwise just skip
     if (git tag -l | grep "$tagname" &> /dev/null);
     then
@@ -28,7 +28,7 @@ if [ "$WERCKER_RESULT" = "passed" ]; then
     fi
 
     # Tag your commit.
-    git tag -a deploy-$WERCKER_DEPLOYTARGET_NAME $WERCKER_GIT_COMMIT -m "Wercker deploy by $WERCKER_STARTED_BY :articulated_lorry:."
+    git tag -a deploy-$WERCKER_GIT_COMMIT $WERCKER_GIT_COMMIT -m "Wercker deploy by $WERCKER_STARTED_BY :articulated_lorry:."
     git push --tags $GIT_REMOTE
 else
     info "skipping git tag because the deploy result is $WERCKER_RESULT"
